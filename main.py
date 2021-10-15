@@ -9,12 +9,14 @@ game.scenes.set("level1")
 
 player = rb.RigidBody({
     "friction": rb.Vector(0.95, 1),
-    "hitbox": rb.Polygon.generate_rect(32, 16),
+    "hitbox": rb.Polygon.generate_rect(28*2, 15*2),
     "pos": rb.Vector(50, 50),
     "debug": True,
-    "img": "",
+    "img": "img/ufo.png",
+    "scale": rb.Vector(2,2),
     "col_type": rb.COL_TYPE.ELASTIC,
 })
+
 
 floor = rb.RigidBody({
     "hitbox": rb.Polygon.generate_rect(600, 1),
@@ -34,9 +36,10 @@ def player_update():
 
     if rb.Input.is_pressed("b"):
         for fishy in fish.sprites:
-            fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos), player.pos.distance_to(fishy.pos)/20))
+            fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos), player.pos.distance_to(fishy.pos)*10*rb.Time.delta_time("sec")))
             fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
             fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
+
     if rb.Input.is_pressed("w"):
         player.acceleration.y = -400
     else:
