@@ -70,7 +70,7 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     fish_imgs = ["img/greenfish.png", "img/whitefish.png"]
     for _ in range(amt):
         scale = random.randint(1, 3)
-        rotation = random.randint(0, 90)
+        rotation = random.randint(0, 360)
         fish_ = rb.RigidBody({
                 "img": random.choice(fish_imgs),
                 "hitbox": rb.Polygon.generate_rect(20*scale, 11*scale),
@@ -81,7 +81,7 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
                 "scale": rb.Vector(scale,scale),
                 "rotation": rotation,
             })
-        fish_.hitbox.rotation = rotation
+        fish_.hitbox.rotation = -rotation
         fish.add(fish_)
 
 gen_fish(rb.Vector(), rb.Vector(600, 400), 20)
