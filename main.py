@@ -33,8 +33,6 @@ player.update = player_update
 
 mainScene.add(player)
 
-game.begin()
-
 
 fish = rb.Group()
 mainScene.add(fish)
@@ -45,6 +43,8 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
         fish.add(rb.RigidBody({
                 "img": random.choice(fish_imgs),
                 "hitbox": rb.Polygon.generate_rect(16, 16),
-                "pos": random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y),
+                "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
                 "debug": True
-            })
+            }))
+
+game.begin()
