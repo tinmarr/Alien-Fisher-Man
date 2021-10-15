@@ -3,9 +3,32 @@ import random
 
 game = rb.Game()
 
+menu = rb.Scene()
+game.scenes.add(menu, "menu")
+game.scenes.set("menu")
+title = rb.sprite.Text({
+    "pos": (game.window_size / 2).round(0) - rb.Vector(0, game.window_height/4),
+    "text": "if yo mama was an alien... she would be followed by fish",
+    "size": 24,
+})
+play = rb.sprite.Text({
+    "pos": (game.window_size / 2).round(0),
+    "text": "SPACE to Play",
+    "size": 20,
+})
+def play_update():
+    if rb.Input.is_pressed("SPACE"):
+        game.scenes.set("level1")
+play.update = play_update
+menu.add(title)
+menu.add(play)
+
+bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
+
+
 level1 = rb.Scene()
 game.scenes.add(level1, "level1")
-game.scenes.set("level1")
+# game.scenes.set("level1")
 
 player = rb.RigidBody({
     "friction": rb.Vector(0.95, 1),
