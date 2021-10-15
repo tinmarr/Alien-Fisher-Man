@@ -12,7 +12,7 @@ player = rb.RigidBody({
     "hitbox": rb.Polygon.generate_rect(32, 32),
     "pos": rb.Vector(50, 50),
     "debug": True,
-    "img": "empty",
+    "img": "",
     "col_type": rb.COL_TYPE.ELASTIC,
 })
 
@@ -23,6 +23,7 @@ floor = rb.RigidBody({
     "img": "empty",
     "gravity": 0,
 })
+bg = rb.Image("", rb.Vector(50, 10), scale_factor=rb.Vector(20, 20))
 mainScene.add(floor)
 
 fish = rb.Group()
@@ -42,16 +43,26 @@ def player_update():
         player.acceleration.x = 500
     else:
         player.acceleration.x = 0
-    
+
     fish.collide_rb(player)
     fish.collide_rb(floor)
     player.collide(floor)
     fish.collide_self()
-    
+
+
+    mainScene.camera.pos = mainScene.camera.pos.lerp(player.pos - game.window_size / 2, 0.05)
+    print(mainScene.camera.pos)
+
 
 player.update = player_update
 
 mainScene.add(player)
+mainScene.add(bg)
+
+
+
+fish = rb.Group()
+mainScene.add(fish)
 
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     fish_imgs = ["empty"]
@@ -66,5 +77,4 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
             }))
 
 gen_fish(rb.Vector(), rb.Vector(600, 400), 20)
-
 game.begin()

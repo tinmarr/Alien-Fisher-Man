@@ -210,8 +210,7 @@ class Vector:
         :param t: the amount you lerp between 0 and 1
         """
         t = PMath.clamp(t, 0, 1)
-        self.x = PMath.lerp(self.x, target.x, t)
-        self.y = PMath.lerp(self.y, target.y, t)
+        return Vector(PMath.lerp(self.x, target.x, t), PMath.lerp(self.y, target.y, t))
 
     def round(self, decimal_places: int) -> "Vector":
         """
