@@ -12,8 +12,8 @@ class Image(Sprite):
     :param image_location: The path to the image.
     :param pos: The position of the sprite.
     """
-    def __init__(self, image_location: str, pos: Vector = Vector(), scale_factor: Vector = Vector(1, 1)):
-        super().__init__(pos)
+    def __init__(self, image_location: str, pos: Vector = Vector(), scale_factor: Vector = Vector(1, 1), z_index: int = 0):
+        super().__init__(pos, z_index)
         if image_location == "" or image_location == "default":
             self.image = load("rubato/static/default.png")
         elif image_location == "empty":

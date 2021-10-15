@@ -9,7 +9,7 @@ game.scenes.set("main")
 
 player = rb.RigidBody({
     "friction": rb.Vector(0.95, 1),
-    "hitbox": rb.Polygon.generate_rect(32, 32),
+    "hitbox": rb.Polygon.generate_rect(32, 16),
     "pos": rb.Vector(50, 50),
     "debug": True,
     "img": "",
@@ -17,8 +17,8 @@ player = rb.RigidBody({
 })
 
 floor = rb.RigidBody({
-    "hitbox": rb.Polygon.generate_rect(600, 100),
-    "pos": rb.Vector(300, 300),
+    "hitbox": rb.Polygon.generate_rect(600, 1),
+    "pos": rb.Vector(300, 400),
     "debug": True,
     "img": "empty",
     "gravity": 0,
@@ -65,15 +65,16 @@ fish = rb.Group()
 mainScene.add(fish)
 
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
-    fish_imgs = ["empty"]
+    fish_imgs = ["img/greenfish.png", "img/whitefish.png"]
     for _ in range(amt):
         fish.add(rb.RigidBody({
                 "img": random.choice(fish_imgs),
                 "hitbox": rb.Polygon.generate_rect(16, 16),
                 "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
-                "debug": True,
-                "gravity": 100,
+                "debug": False,
+                "gravity": 0,
                 "col_type": rb.COL_TYPE.STATIC,
+                "scale": rb.Vector(2,2)
             }))
 
 gen_fish(rb.Vector(), rb.Vector(600, 400), 20)

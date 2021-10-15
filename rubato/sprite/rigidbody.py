@@ -26,10 +26,11 @@ class RigidBody(Sprite):
         "col_type": COL_TYPE.STATIC,
         "scale": Vector(1, 1),
         "debug": False,
+        "z_index": 0
     }
 
     def __init__(self, options: dict = {}):
-        super().__init__(options.get("pos", Vector()))
+        super().__init__(options.get("pos", Vector()), options.get("z_index", RigidBody.default_options["z_index"]))
 
         self.velocity = Vector()
         self.acceleration = Vector()
@@ -147,4 +148,4 @@ class RigidBody(Sprite):
         self.render.draw(camera)
 
         if self.debug:
-            polygon(Display.global_display, (0, 255, 0), list(map(lambda v: (v.x, v.y), self.hitbox.real_verts())), 3)
+            polygon(Display.global_display, (0, 255, 0), list(map(lambda v: camera.transform(v * camera.zoom), self.hitbox.real_verts())), 3)
