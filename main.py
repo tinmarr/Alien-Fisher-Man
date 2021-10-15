@@ -1,4 +1,5 @@
 import rubato as rb
+import random
 
 game = rb.Game()
 
@@ -12,7 +13,20 @@ player = rb.RigidBody({
     "pos": rb.Vector(50, 50),
     "debug": True,
     "img": "empty",
+    "col_type": rb.COL_TYPE.ELASTIC,
 })
+
+floor = rb.RigidBody({
+    "hitbox": rb.Polygon.generate_rect(600, 100),
+    "pos": rb.Vector(300, 300),
+    "debug": True,
+    "img": "empty",
+    "gravity": 0,
+})
+mainScene.add(floor)
+
+fish = rb.Group()
+mainScene.add(fish)
 
 def player_update():
     player.physics()
@@ -28,23 +42,29 @@ def player_update():
         player.acceleration.x = 500
     else:
         player.acceleration.x = 0
+    
+    fish.collide_rb(player)
+    fish.collide_rb(floor)
+    player.collide(floor)
+    fish.collide_self()
+    
 
 player.update = player_update
 
 mainScene.add(player)
 
-
-fish = rb.Group()
-mainScene.add(fish)
-
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
-    fish_imgs = [""]
+    fish_imgs = ["empty"]
     for _ in range(amt):
         fish.add(rb.RigidBody({
                 "img": random.choice(fish_imgs),
                 "hitbox": rb.Polygon.generate_rect(16, 16),
                 "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
-                "debug": True
+                "debug": True,
+                "gravity": 100,
+                "col_type": rb.COL_TYPE.STATIC,
             }))
+
+gen_fish(rb.Vector(), rb.Vector(600, 400), 20)
 
 game.begin()

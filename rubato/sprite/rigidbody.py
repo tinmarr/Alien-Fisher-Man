@@ -2,7 +2,6 @@ from typing import Callable
 from rubato.sprite import Sprite, Image
 from rubato.utils import Vector, Time, PMath, COL_TYPE, Polygon, SAT, Display
 from rubato.scenes import Camera
-from rubato.group import Group
 from pygame import Surface
 from pygame.draw import polygon
 
@@ -91,20 +90,28 @@ class RigidBody(Sprite):
             # col_info is all in reference to self
             col_info.separation.round(4)
             self.grounded = PMath.sign(col_info.separation.y) == 1
+
+            if other.col_type == COL_TYPE.STATIC:
+                self.pos -= col_info.separation
+            else:
+                other.pos += col_info.separation
+            
             if self.col_type == COL_TYPE.STATIC or other.col_type == COL_TYPE.STATIC:
                 # Static
-                self.pos -= col_info.separation
                 if col_info.separation.y != 0:
                     self.velocity.y = 0
+                    other.velocity.y = 0
                 if col_info.separation.x != 0:
                     self.velocity.x = 0
+                    other.velocity.x = 0
             else:
                 # Elastic
-                self.pos -= col_info.separation
                 if col_info.separation.y != 0:
                     self.velocity.invert("y")
+                    other.velocity.invert("y")
                 if col_info.separation.x != 0:
                     self.velocity.invert("x")
+                    other.velocity.invert("x")
 
         if col_info is not None: callback(col_info)
         return col_info
