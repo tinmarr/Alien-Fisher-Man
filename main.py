@@ -3,9 +3,9 @@ import random
 
 game = rb.Game()
 
-mainScene = rb.Scene()
-game.scenes.add(mainScene, "main")
-game.scenes.set("main")
+level1 = rb.Scene()
+game.scenes.add(level1, "level1")
+game.scenes.set("level1")
 
 player = rb.RigidBody({
     "friction": rb.Vector(0.95, 1),
@@ -23,11 +23,11 @@ floor = rb.RigidBody({
     "img": "empty",
     "gravity": 0,
 })
-bg = rb.Image("", rb.Vector(50, 10), scale_factor=rb.Vector(20, 20))
-mainScene.add(floor)
+bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
+level1.add(floor)
 
 fish = rb.Group()
-mainScene.add(fish)
+level1.add(fish)
 
 def player_update():
     player.physics()
@@ -35,7 +35,7 @@ def player_update():
     if rb.Input.is_pressed("b"):
         pass
     if rb.Input.is_pressed("w"):
-        player.acceleration.y = -500
+        player.acceleration.y = -400
     else:
         player.acceleration.y = 0
 
@@ -52,31 +52,32 @@ def player_update():
     fish.collide_self()
 
 
-    mainScene.camera.pos = mainScene.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
-    print(mainScene.camera.pos)
+    level1.camera.pos = level1.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
+    print(level1.camera.pos)
 
 
 player.update = player_update
 
-mainScene.add(player)
-mainScene.add(bg)
+level1.add(player)
+level1.add(bg)
 
 
 
 fish = rb.Group()
-mainScene.add(fish)
+level1.add(fish)
 
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     fish_imgs = ["img/greenfish.png", "img/whitefish.png"]
     for _ in range(amt):
+        scale = random.randint(1, 3)
         fish.add(rb.RigidBody({
                 "img": random.choice(fish_imgs),
-                "hitbox": rb.Polygon.generate_rect(16, 16),
+                "hitbox": rb.Polygon.generate_rect(20*scale, 11*scale),
                 "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
                 "debug": False,
                 "gravity": 0,
                 "col_type": rb.COL_TYPE.STATIC,
-                "scale": rb.Vector(2,2)
+                "scale": rb.Vector(scale,scale)
             }))
 
 gen_fish(rb.Vector(), rb.Vector(600, 400), 20)
