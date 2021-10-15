@@ -26,7 +26,8 @@ class RigidBody(Sprite):
         "col_type": COL_TYPE.STATIC,
         "scale": Vector(1, 1),
         "debug": False,
-        "z_index": 0
+        "z_index": 0,
+        "rotation": 0,
     }
 
     def __init__(self, options: dict = {}):
@@ -44,7 +45,7 @@ class RigidBody(Sprite):
 
         self.params = options
 
-        self.render = Image(options.get("img", RigidBody.default_options["img"]), self.pos, options.get("scale", RigidBody.default_options["scale"]))
+        self.render = Image(options.get("img", RigidBody.default_options["img"]), self.pos, options.get("scale", RigidBody.default_options["scale"]), options.get("z_index", RigidBody.default_options["z_index"]), options.get("rotation", RigidBody.default_options["rotation"]))
 
         self.debug = options.get("debug", RigidBody.default_options["debug"])
 
