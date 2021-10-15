@@ -33,7 +33,10 @@ def player_update():
     player.physics()
 
     if rb.Input.is_pressed("b"):
-        pass
+        for fishy in fish.sprites:
+            fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos), player.pos.distance_to(fishy.pos)/20))
+            fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
+            fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
     if rb.Input.is_pressed("w"):
         player.acceleration.y = -400
     else:

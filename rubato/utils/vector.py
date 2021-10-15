@@ -231,3 +231,25 @@ class Vector:
         """
 
         return Vector(math.ceil(self.x), math.ceil(self.y))
+
+    def direction_to(self, vector):
+        """
+        treating vectors as points the direction to the new point from the current point
+        :return: direction to new point
+        """
+        d_x = self.x - vector.x
+        d_y = self.y - vector.y
+        direction = math.atan2(d_y, d_x)
+        return direction
+
+    def distance_to(self, vector):
+        """
+        treating vectors as points the distance to the new point from the current point
+        :return: distance to new point
+        """
+        d_x = self.x - vector.x
+        d_y = self.y - vector.y
+        distance = math.sqrt(d_x**2 + d_y**2)
+        return distance
+
+
