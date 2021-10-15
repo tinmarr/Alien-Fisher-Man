@@ -32,6 +32,8 @@ mainScene.add(fish)
 def player_update():
     player.physics()
 
+    if rb.Input.is_pressed("b"):
+        pass
     if rb.Input.is_pressed("w"):
         player.acceleration.y = -500
     else:
@@ -50,7 +52,7 @@ def player_update():
     fish.collide_self()
 
 
-    mainScene.camera.pos = mainScene.camera.pos.lerp(player.pos - game.window_size / 2, 0.05)
+    mainScene.camera.pos = mainScene.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
     print(mainScene.camera.pos)
 
 
