@@ -2,6 +2,7 @@ import rubato as rb
 import random
 
 game = rb.Game()
+rb.utils.Display.set_window_name("yo mama's an Alien")
 
 menu = rb.Scene()
 game.scenes.add(menu, "menu")
