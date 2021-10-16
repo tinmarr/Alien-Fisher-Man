@@ -1,5 +1,5 @@
 import rubato as rb
-import random
+import random, webbrowser
 
 game = rb.Game()
 rb.utils.Display.set_window_name("yo mama's an Alien")
@@ -20,9 +20,21 @@ play = rb.sprite.Text({
 def play_update():
     if rb.Input.is_pressed("SPACE"):
         game.scenes.set("level1")
+
 play.update = play_update
+interested = rb.sprite.Text({
+    "pos": (game.window_size / 2 - rb.Vector.UP*(play.size*1.5)).round(0),
+    "text": "Interested in who we are? press \'L\'",
+    "size": 20,
+})
+def interested_update():
+    if rb.Input.is_pressed("l"):
+        webbrowser.open("https://github.com/tinmarr/Alien-Fisher-Man")
+
+interested.update = interested_update
 menu.add(title)
 menu.add(play)
+menu.add(interested)
 
 bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
 
