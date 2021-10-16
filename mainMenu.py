@@ -14,14 +14,15 @@ play = rb.sprite.Text({
     "text": "SPACE to Play",
     "size": 20,
 })
+empty = rb.sprite.Empty()
 
 
-def play_update():
+def empty_update():
     if rb.Input.is_pressed("SPACE"):
         rb.game.scenes.set("level1")
 
 
-play.update = play_update
+empty.update = empty_update
 interested = rb.sprite.Text({
     "pos": (rb.game.window_size / 2 - rb.Vector.UP * (play.size * 1.5)).round(0),
     "text": "Interested in who we are? press \'L\'",
@@ -37,4 +38,5 @@ def interested_update():
 interested.update = interested_update
 menu.add(title)
 menu.add(play)
+menu.add(empty)
 menu.add(interested)

@@ -42,6 +42,8 @@ class Sprite:
         return (center - (dims/2)).ceil()
 
     def is_in_frame(self, camera: Camera, game) -> bool:
+        # TODO: how can you do this for a plain Sprite? It won't work as it has no image
+        # TEMP fix
         draw_area_tl = (camera.pos - game.window_size).ceil()
         draw_area_br = (camera.pos + game.window_size).ceil()
         try:
