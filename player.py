@@ -7,7 +7,7 @@ def init(**kwargs):
     externals = kwargs
 
 player = rb.RigidBody({
-    "friction": rb.Vector(0.95, 1),
+    "friction": rb.Vector(0.97, 1),
     "hitbox": rb.Polygon.generate_rect(28 * 2, 15 * 2),
     "pos": rb.Vector(50, 0),
     "debug": True,

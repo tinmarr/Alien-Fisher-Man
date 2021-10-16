@@ -138,6 +138,11 @@ class RigidBody(Sprite):
         """The update loop"""
         if self.params.get("do_physics", RigidBody.default_options["do_physics"]) and self.in_frame:
             self.physics()
+            
+        self.custom_update()
+
+    def custom_update(self):
+        pass
 
     def draw(self, camera: Camera):
         """

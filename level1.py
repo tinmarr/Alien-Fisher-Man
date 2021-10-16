@@ -12,20 +12,21 @@ def gen_barrier(hitbox, pos):
         "img": "empty",
         "gravity": 0,
     })
+    def cu():
+        temp.in_frame = True
+    temp.custom_update = cu
     return temp
 
 
 width = 2000
 height = 1000
 
-floor = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, height / 2))
-wall_left = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(-width / 2, 0))
-wall_right = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(width / 2, 0))
-ceiling = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, -height / 2))
+floor = gen_barrier(rb.Polygon.generate_rect(width, 100), rb.Vector(0, 50 + (height / 2)))
+wall_left = gen_barrier(rb.Polygon.generate_rect(100, height), rb.Vector(-50 - (width / 2), 0))
+wall_right = gen_barrier(rb.Polygon.generate_rect(100, height), rb.Vector(50 + (width / 2), 0))
+ceiling = gen_barrier(rb.Polygon.generate_rect(width, 100), rb.Vector(0, -50 - (height / 2)))
 barriers = rb.Group()
 barriers.sprites = [floor, wall_left, wall_right, ceiling]
-
-level1.add(barriers) # This line is actually useless. We can delete it later but this is so that the hitboxes are rendered. Collision still works without
 
 bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)))
 bg.scale_abs(rb.Vector(width, int(height / 2)))
@@ -72,4 +73,4 @@ player.init(width=width, height=height, level1=level1, barriers=barriers, fish=f
 level1.add(player.player)
 
 
-gen_fish(rb.Vector(-width / 2, 0), rb.Vector(width / 2, height / 2), 50)
+gen_fish(rb.Vector(-width / 2, 100), rb.Vector(width / 2, height / 2), 50)
