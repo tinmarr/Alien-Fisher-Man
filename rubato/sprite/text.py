@@ -20,15 +20,14 @@ class Text(Sprite):
     }
 
     def __init__(self, options=default_options):
+        super().__init__(options.get("pos", Text.default_options["pos"]), options.get("z_index", Text.default_options["z_index"]))
         self.text = options.get("text", Text.default_options["text"])
-        self.pos = options.get("pos", Text.default_options["pos"])
         self.size = options.get("size", Text.default_options["size"])
-        self.z_index = options.get("z_index", Text.default_options["z_index"])
         self.font_name = options.get("font_name", Text.default_options["font_name"])
         self.color = options.get("color", Text.default_options["color"])
         font = pygame.font.SysFont(self.font_name, self.size)
         self.image = font.render(self.text, True, self.color)
-        super().__init__(self.pos, self.z_index)
+        
 
     def remake_image(self):
         font = pygame.font.SysFont(self.font_name, self.size)
