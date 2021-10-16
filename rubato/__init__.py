@@ -8,7 +8,7 @@ from sys import exit
 from rubato.utils import STATE, Display, Vector, PMath, Time, Polygon, Circle, SAT, COL_TYPE
 from rubato.scenes import SceneManager, Scene, Camera
 from rubato.radio import Radio
-from rubato.sprite import Sprite, Image, RigidBody
+from rubato.sprite import Sprite, Image, RigidBody, Button, Rectangle, Text
 from rubato.group import Group
 from rubato.input import Input
 

@@ -26,15 +26,18 @@ ceiling = gen_barrier(rb.Polygon.generate_rect(width, 100), rb.Vector(0, -50 - (
 barriers = rb.Group()
 barriers.sprites = [floor, wall_left, wall_right, ceiling]
 
-bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)))
+bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)), z_index=-1)
 bg.scale_abs(rb.Vector(width, int(height / 2)))
 bg.image.set_colorkey((200, 200, 200))
 bg.image.set_alpha(100)
+
+sky = rb.Rectangle(rb.Vector(0, int(-height/4)), rb.Vector(width, int(height/2)), (92, 210, 242), -1)
 
 fish = rb.Group()
 level1.add(fish)
 
 level1.add(bg)
+level1.add(sky)
 
 fish = rb.Group()
 level1.add(fish)

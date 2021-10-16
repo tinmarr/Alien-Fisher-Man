@@ -4,12 +4,12 @@ import webbrowser
 menu = rb.Scene()
 rb.game.scenes.add(menu, "menu")
 
-title = rb.sprite.Text({
+title = rb.Text({
     "pos": (rb.game.window_size / 2).round(0) - rb.Vector(0, rb.game.window_height / 4),
     "text": "if yo mama was an alien... she would be followed by fish",
     "size": 24,
 })
-play = rb.sprite.Text({
+play = rb.Text({
     "pos": (rb.game.window_size / 2).round(0),
     "text": "SPACE to Play",
     "size": 20,
