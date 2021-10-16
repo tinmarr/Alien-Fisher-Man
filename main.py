@@ -1,23 +1,21 @@
 import rubato as rb
 import random, webbrowser
 
-# TODO: move game into rubato, all game. should really be rb. or if you want to then rb.game that way you can access from diff. files \
-# This will allow making a level1 file and making level1 and a seperate menu file and making menu. Something to think about
-game = rb.Game()
+rb.init()
 rb.utils.Display.set_window_name("yo mama's an Alien")
 
 # design menu
 
 menu = rb.Scene()
-game.scenes.add(menu, "menu")
-game.scenes.set("menu")
+rb.game.scenes.add(menu, "menu")
+rb.game.scenes.set("menu")
 title = rb.sprite.Text({
-    "pos": (game.window_size / 2).round(0) - rb.Vector(0, game.window_height / 4),
+    "pos": (rb.game.window_size / 2).round(0) - rb.Vector(0, rb.game.window_height / 4),
     "text": "if yo mama was an alien... she would be followed by fish",
     "size": 24,
 })
 play = rb.sprite.Text({
-    "pos": (game.window_size / 2).round(0),
+    "pos": (rb.game.window_size / 2).round(0),
     "text": "SPACE to Play",
     "size": 20,
 })
@@ -25,12 +23,12 @@ play = rb.sprite.Text({
 
 def play_update():
     if rb.Input.is_pressed("SPACE"):
-        game.scenes.set("level1")
+        rb.game.scenes.set("level1")
 
 
 play.update = play_update
 interested = rb.sprite.Text({
-    "pos": (game.window_size / 2 - rb.Vector.UP * (play.size * 1.5)).round(0),
+    "pos": (rb.game.window_size / 2 - rb.Vector.UP * (play.size * 1.5)).round(0),
     "text": "Interested in who we are? press \'L\'",
     "size": 20,
 })
@@ -49,7 +47,7 @@ menu.add(interested)
 # design level1
 
 level1 = rb.Scene()
-game.scenes.add(level1, "level1")
+rb.game.scenes.add(level1, "level1")
 # game.scenes.set("level1")
 
 player = rb.RigidBody({
@@ -122,8 +120,8 @@ def player_update():
         player.collide(barrier)
     fish.collide_self()
 
-    level1.camera.pos = level1.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
-    level1.camera.pos.clamp(rb.Vector(-width / 2, -height / 2), rb.Vector(width / 2, height / 2) - game.window_size)
+    level1.camera.pos = level1.camera.pos.lerp(player.pos - rb.game.window_size / 2, 0.05).round(0)
+    level1.camera.pos.clamp(rb.Vector(-width / 2, -height / 2), rb.Vector(width / 2, height / 2) - rb.game.window_size)
     # TODO: support window_resizing and camera zoom in and out
 
 
@@ -165,4 +163,4 @@ def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
 
 gen_fish_clusters(rb.Vector(-width / 2, 0), rb.Vector(width / 2, height / 2), 20)
 # TODO: 20 is plenty fish but anything more and it lags out (try 50). We need to not draw stuff off screen and more optimizations
-game.begin()
+rb.begin()

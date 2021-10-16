@@ -3,7 +3,7 @@ environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 environ["PYTHONOPTIMIZE"] = "1" # Makes sure that typechecking is run at the start of runtime instead of all the time
 import pygame
 from sys import exit
-from typeguard.importhook import install_import_hook
+# from typeguard.importhook import install_import_hook
 # install_import_hook("rubato")
 from rubato.utils import STATE, Display, Vector, PMath, Time, Polygon, Circle, SAT, COL_TYPE
 from rubato.scenes import SceneManager, Scene, Camera
@@ -12,6 +12,17 @@ from rubato.sprite import Sprite, Image, RigidBody
 from rubato.group import Group
 from rubato.input import Input
 
+game = None
+
+def init(options: dict = {}):
+    global game
+    game = Game(options)
+
+def begin():
+    if game is not None:
+        game.start_loop()
+    else:
+        raise RuntimeError("You have not initialized rubato. Make sure to run rubato.init() right after importing the library")
 
 # TODO Sound manager
 class Game:
@@ -101,7 +112,7 @@ class Game:
         self.scenes.draw()
         self.display = Display.display
 
-    def begin(self):
+    def start_loop(self):
         """
         Actually runs the game
         """
