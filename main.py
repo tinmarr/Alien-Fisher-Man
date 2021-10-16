@@ -5,6 +5,8 @@ import random, webbrowser
 game = rb.Game()
 rb.utils.Display.set_window_name("yo mama's an Alien")
 
+# design menu
+
 menu = rb.Scene()
 game.scenes.add(menu, "menu")
 game.scenes.set("menu")
@@ -37,6 +39,8 @@ menu.add(title)
 menu.add(play)
 menu.add(interested)
 
+# design level1
+
 level1 = rb.Scene()
 game.scenes.add(level1, "level1")
 # game.scenes.set("level1")
@@ -67,8 +71,11 @@ wall_left = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(-width/2,
 wall_right = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(width/2, 0))
 ceiling = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, -height/2))
 barriers = [floor, wall_left, wall_right, ceiling]
-for barrier in barriers: level1.add(barrier)
-bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
+for barrier in barriers: level1.add(barrier)  # TODO: add barriers as a group if Group collision already working
+bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height/4)))
+bg.scale_abs(rb.Vector(width, int(height/2)))
+bg.image.set_colorkey((200, 200, 200))
+bg.image.set_alpha(100)
 
 fish = rb.Group()
 level1.add(fish)
@@ -102,6 +109,8 @@ def player_update():
 
 
     level1.camera.pos = level1.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
+    level1.camera.pos.clamp(rb.Vector(-width/2, -height/2), rb.Vector(width/2, height/2)-game.window_size)
+    # TODO: support window_resizing and camera zoom in and out
     print(level1.camera.pos)
 
 
@@ -109,8 +118,6 @@ player.update = player_update
 
 level1.add(player)
 level1.add(bg)
-
-
 
 fish = rb.Group()
 level1.add(fish)
