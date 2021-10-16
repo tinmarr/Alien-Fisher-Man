@@ -58,5 +58,8 @@ class Scene:
             if sprite.z_index <= self.camera.z_index:
                 if isinstance(sprite, Group):
                     sprite.draw(self.camera, game)
-                elif sprite.in_frame(self.camera, game):
+                elif sprite.is_in_frame(self.camera, game):
                     sprite.draw(self.camera)
+                    sprite.in_frame = True
+                else:
+                    sprite.in_frame = False

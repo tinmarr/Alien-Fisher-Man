@@ -33,19 +33,24 @@ class Group:
             if sprite.z_index <= camera.z_index:
                 if isinstance(sprite, Group):
                     sprite.draw(camera, game)
-                elif sprite.in_frame(camera, game):
+                elif sprite.is_in_frame(camera, game):
+                    sprite.in_frame = True
                     sprite.draw(camera)
+                else:
+                    sprite.in_frame = False
     
     def collide_rb(self, rb: RigidBody):
         for sprite in self.sprites:
-            sprite.collide(rb)
+            if sprite.in_frame:
+                sprite.collide(rb)
 
     def collide_group(self, group: "Group"):
         for sprite in self.sprites:
-            group.collide_rb(sprite)
+            if sprite.in_frame:
+                group.collide_rb(sprite)
 
     def collide_self(self):
         for sprite in self.sprites:
             for sprite2 in self.sprites:
-                if sprite != sprite2:
+                if sprite != sprite2 and sprite.in_frame and sprite2.in_frame:
                     sprite.collide(sprite2)

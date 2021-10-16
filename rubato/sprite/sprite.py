@@ -14,6 +14,7 @@ class Sprite:
         self.pos = pos
         self.state = {}
         self.z_index = z_index
+        self.in_frame = False
 
     def update(self):
         """The update loop"""
@@ -40,7 +41,7 @@ class Sprite:
         """
         return (center - (dims/2)).ceil()
 
-    def in_frame(self, camera: Camera, game) -> bool:
+    def is_in_frame(self, camera: Camera, game) -> bool:
         draw_area_tl = (camera.pos - game.window_size).ceil()
         draw_area_br = (camera.pos + game.window_size).ceil()
         try:

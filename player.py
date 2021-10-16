@@ -48,7 +48,7 @@ def player_update():
 
     externals["fish"].collide_self()
 
-    externals["level1"].camera.pos = externals["level1"].camera.pos.lerp(player.pos - rb.game.window_size / 2, 0.05).round(0)
+    externals["level1"].camera.pos = externals["level1"].camera.pos.lerp(player.pos - rb.game.window_size / 2, 1.5 * rb.Time.delta_time("sec")).round(0)
     externals["level1"].camera.pos.clamp(rb.Vector(-externals["width"] / 2, -externals["height"] / 2), rb.Vector(externals["width"] / 2, externals["height"] / 2) - rb.game.window_size)
     # TODO: support window_resizing and camera zoom in and out
 
