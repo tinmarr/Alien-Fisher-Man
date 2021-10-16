@@ -12,9 +12,7 @@ def gen_barrier(hitbox, pos):
         "img": "empty",
         "gravity": 0,
     })
-    def cu():
-        temp.in_frame = True
-    temp.custom_update = cu
+    temp.in_frame = True
     return temp
 
 
