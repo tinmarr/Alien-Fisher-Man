@@ -41,8 +41,3 @@ class Text(Sprite):
         """
 
         super().draw(self.image, camera)
-
-    # TODO: ask yamm how to get rid of update
-    def update(self):
-        pass
-
