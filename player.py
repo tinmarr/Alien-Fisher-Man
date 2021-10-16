@@ -9,7 +9,7 @@ def init(**kwargs):
 player = rb.RigidBody({
     "friction": rb.Vector(0.95, 1),
     "hitbox": rb.Polygon.generate_rect(28 * 2, 15 * 2),
-    "pos": rb.Vector(50, 50),
+    "pos": rb.Vector(50, 0),
     "debug": True,
     "img": "img/ufo.png",
     "scale": rb.Vector(2, 2),

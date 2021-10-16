@@ -72,4 +72,4 @@ player.init(width=width, height=height, level1=level1, barriers=barriers, fish=f
 level1.add(player.player)
 
 
-gen_fish_clusters(rb.Vector(-width / 2, 0), rb.Vector(width / 2, height / 2), 50)
+gen_fish(rb.Vector(-width / 2, 0), rb.Vector(width / 2, height / 2), 50)
