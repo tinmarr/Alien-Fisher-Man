@@ -27,6 +27,7 @@ class SceneManager:
             raise ValueError(f"The scene id {scene_id} is not unique in this manager")
 
         self.scenes[scene_id] = scene
+        scene.id = scene_id
         return scene_id
 
     @property

@@ -12,6 +12,7 @@ class Scene:
         self.sprites = {}
         self.min_id = 0
         self.camera = Camera()
+        self.id = ""
 
     def add(self, sprite: Sprite | Group, sprite_id: int | str = ""):
         """
