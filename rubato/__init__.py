@@ -109,7 +109,7 @@ class Game:
         """Draw loop for the game."""
         self.screen.fill((0, 0, 0))
         if self.reset_display: self.display.fill((255, 255, 255))
-        self.scenes.draw()
+        self.scenes.draw(game)
         self.display = Display.display
 
     def start_loop(self):
