@@ -1,6 +1,7 @@
 import rubato as rb
 import random, webbrowser
 
+# TODO: move game into rb, all game. should really be rb. or if you want to then rb.game that way you can access from diff. files
 game = rb.Game()
 rb.utils.Display.set_window_name("yo mama's an Alien")
 
@@ -36,9 +37,6 @@ menu.add(title)
 menu.add(play)
 menu.add(interested)
 
-bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
-
-
 level1 = rb.Scene()
 game.scenes.add(level1, "level1")
 # game.scenes.set("level1")
@@ -53,16 +51,24 @@ player = rb.RigidBody({
     "col_type": rb.COL_TYPE.ELASTIC,
 })
 
-
-floor = rb.RigidBody({
-    "hitbox": rb.Polygon.generate_rect(600, 1),
-    "pos": rb.Vector(300, 400),
-    "debug": True,
-    "img": "empty",
-    "gravity": 0,
-})
+def gen_barrier(hitbox, pos):
+    temp =  rb.RigidBody({
+        "hitbox": hitbox,
+        "pos": pos,
+        "debug": True,
+        "img": "empty",
+        "gravity": 0,
+    })
+    return temp
+width = 2000
+height = 1000
+floor = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, height/2))
+wall_left = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(-width/2, 0))
+wall_right = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(width/2, 0))
+ceiling = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, -height/2))
+barriers = [floor, wall_left, wall_right, ceiling]
+for barrier in barriers: level1.add(barrier)
 bg = rb.Image("", rb.Vector(50, 10), rb.Vector(20, 20), -1)
-level1.add(floor)
 
 fish = rb.Group()
 level1.add(fish)
@@ -89,8 +95,9 @@ def player_update():
         player.acceleration.x = 0
 
     fish.collide_rb(player)
-    fish.collide_rb(floor)
-    player.collide(floor)
+    for barrier in barriers:
+        fish.collide_rb(barrier)
+        player.collide(barrier)
     fish.collide_self()
 
 
