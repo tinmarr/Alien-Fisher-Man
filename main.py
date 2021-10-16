@@ -1,7 +1,8 @@
 import rubato as rb
 import random, webbrowser
 
-# TODO: move game into rb, all game. should really be rb. or if you want to then rb.game that way you can access from diff. files
+# TODO: move game into rubato, all game. should really be rb. or if you want to then rb.game that way you can access from diff. files \
+# This will allow making a level1 file and making level1 and a seperate menu file and making menu. Something to think about
 game = rb.Game()
 rb.utils.Display.set_window_name("yo mama's an Alien")
 
@@ -98,11 +99,13 @@ def player_update():
             fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
                                                         player.pos.distance_to(fishy.pos) * 10 * rb.Time.delta_time(
                                                             "sec")))
-            fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
-            fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
+            # fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
+            # fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
 
     if rb.Input.is_pressed("w"):
         player.acceleration.y = -400
+    elif rb.Input.is_pressed("s"):
+        player.acceleration.y = 400
     else:
         player.acceleration.y = 0
 
@@ -122,7 +125,6 @@ def player_update():
     level1.camera.pos = level1.camera.pos.lerp(player.pos - game.window_size / 2, 0.05).round(0)
     level1.camera.pos.clamp(rb.Vector(-width / 2, -height / 2), rb.Vector(width / 2, height / 2) - game.window_size)
     # TODO: support window_resizing and camera zoom in and out
-    print(level1.camera.pos)
 
 
 player.update = player_update
@@ -143,7 +145,6 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
             "img": random.choice(fish_imgs),
             "hitbox": rb.Polygon.generate_rect(20 * scale, 11 * scale),
             "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
-            "debug": True,
             "gravity": 0,
             "col_type": rb.COL_TYPE.STATIC,
             "scale": rb.Vector(scale, scale),
