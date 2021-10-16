@@ -42,9 +42,10 @@ def player_update():
         player.acceleration.x = 0
 
     externals["fish"].collide_rb(player)
-    for barrier in externals["barriers"]:
-        externals["fish"].collide_rb(barrier)
-        player.collide(barrier)
+
+    externals["barriers"].collide_rb(player)
+    externals["barriers"].collide_group(externals["fish"])
+
     externals["fish"].collide_self()
 
     externals["level1"].camera.pos = externals["level1"].camera.pos.lerp(player.pos - rb.game.window_size / 2, 0.05).round(0)

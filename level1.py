@@ -17,12 +17,16 @@ def gen_barrier(hitbox, pos):
 
 width = 2000
 height = 1000
+
 floor = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, height / 2))
 wall_left = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(-width / 2, 0))
 wall_right = gen_barrier(rb.Polygon.generate_rect(1, height), rb.Vector(width / 2, 0))
 ceiling = gen_barrier(rb.Polygon.generate_rect(width, 1), rb.Vector(0, -height / 2))
-barriers = [floor, wall_left, wall_right, ceiling]
-for barrier in barriers: level1.add(barrier)  # TODO: add barriers as a group if Group collision already working
+barriers = rb.Group()
+barriers.sprites = [floor, wall_left, wall_right, ceiling]
+
+level1.add(barriers) # This line is actually useless. We can delete it later but this is so that the hitboxes are rendered. Collision still works without
+
 bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)))
 bg.scale_abs(rb.Vector(width, int(height / 2)))
 bg.image.set_colorkey((200, 200, 200))
