@@ -45,7 +45,7 @@ class RigidBody(Sprite):
 
         self.params = options
 
-        self.render = Image(options.get("img", RigidBody.default_options["img"]), self.pos, options.get("scale", RigidBody.default_options["scale"]), options.get("z_index", RigidBody.default_options["z_index"]), options.get("rotation", RigidBody.default_options["rotation"]))
+        self.image = Image(options.get("img", RigidBody.default_options["img"]), self.pos, options.get("scale", RigidBody.default_options["scale"]), options.get("z_index", RigidBody.default_options["z_index"]), options.get("rotation", RigidBody.default_options["rotation"]))
 
         self.debug = options.get("debug", RigidBody.default_options["debug"])
 
@@ -145,8 +145,8 @@ class RigidBody(Sprite):
 
         :param camera: The current camera
         """
-        self.render.pos = self.pos
-        self.render.draw(camera)
+        self.image.pos = self.pos
+        self.image.draw(camera)
 
         if self.debug:
             polygon(Display.global_display, (0, 255, 0), list(map(lambda v: camera.transform(v * camera.zoom), self.hitbox.real_verts())), 3)

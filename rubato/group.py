@@ -27,12 +27,14 @@ class Group:
         for sprite in self.sprites:
             sprite.update()
 
-    def draw(self, camera: Camera):
+    def draw(self, camera: Camera, game):
         """Draws all the sprites in the group."""
         for sprite in sorted(self.sprites, key=lambda spr: spr.z_index):
-            if sprite.z_index > camera.z_index:
-                break
-            sprite.draw(camera)
+            if sprite.z_index <= camera.z_index:
+                if isinstance(sprite, Group):
+                    sprite.draw(camera, game)
+                elif sprite.in_frame(camera, game):
+                    sprite.draw(camera)
     
     def collide_rb(self, rb: RigidBody):
         for sprite in self.sprites:

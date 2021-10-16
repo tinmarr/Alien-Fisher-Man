@@ -43,7 +43,7 @@ level1.add(fish)
 
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     fish_imgs = ["img/greenfish.png", "img/whitefish.png"]
-    for _ in range(amt):
+    for _ in range(amt+1):
         scale = random.randint(1, 3)
         rotation = random.randint(0, 360)
         fish_ = rb.RigidBody({
@@ -59,6 +59,7 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
         fish.add(fish_)
 
 
+
 def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     while amt > 1:
         pos = rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y))
@@ -70,5 +71,5 @@ def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
 player.init(width=width, height=height, level1=level1, barriers=barriers, fish=fish)
 level1.add(player.player)
 
+
 gen_fish_clusters(rb.Vector(-width / 2, 0), rb.Vector(width / 2, height / 2), 20)
-# TODO: 20 is plenty fish but anything more and it lags out (try 50). We need to not draw stuff off screen and more optimizations

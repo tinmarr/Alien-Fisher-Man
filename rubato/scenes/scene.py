@@ -1,6 +1,7 @@
 from rubato.scenes import Camera
-from rubato.sprite import Sprite
+from rubato.sprite import Sprite, RigidBody
 from rubato.group import Group
+from rubato.utils import Vector
 
 
 class Scene:
@@ -53,10 +54,9 @@ class Scene:
         """
         The draw loop for this scene.
         """
-        draw_area_tl = self.camera.pos - game.window_size
-        draw_area_br = self.camera.pos + game.window_size
         for sprite in sorted(self.sprites.values(), key=lambda spr: spr.z_index):
-            if sprite.z_index > self.camera.z_index:
-                continue
-            if draw_area_tl.x <= sprite.pos.x <= draw_area_br.x and draw_area_tl.y <= sprite.pos.y <= draw_area_br.y: # TODO use old overlap code for this: https://github.com/tinmarr/pygame-game-engine/blob/33cf0c4ec6e7316968313696241ee84637175db9/rubato/sprite/collider.py
-                sprite.draw(self.camera)
+            if sprite.z_index <= self.camera.z_index:
+                if isinstance(sprite, Group):
+                    sprite.draw(self.camera, game)
+                elif sprite.in_frame(self.camera, game):
+                    sprite.draw(self.camera)

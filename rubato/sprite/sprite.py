@@ -2,7 +2,6 @@ from rubato.utils import Display, Vector
 from pygame.transform import scale
 from pygame.surface import Surface
 from rubato.scenes import Camera
-import math
 
 class Sprite:
     """
@@ -40,3 +39,15 @@ class Sprite:
         :param dims: The width and the height of the item as a sprite as a Vector
         """
         return (center - (dims/2)).ceil()
+
+    def in_frame(self, camera: Camera, game) -> bool:
+        draw_area_tl = (camera.pos - game.window_size).ceil()
+        draw_area_br = (camera.pos + game.window_size).ceil()
+        try:
+            sprite_tl = (self.pos - Vector(self.image.image.get_width(), self.image.image.get_height())).ceil()
+            sprite_br = (self.pos + Vector(self.image.image.get_width(), self.image.image.get_height())).ceil()
+        except AttributeError:
+            sprite_tl = (self.pos - Vector(self.image.get_width(), self.image.get_height())).ceil()
+            sprite_br = (self.pos + Vector(self.image.get_width(), self.image.get_height())).ceil()
+
+        return not (sprite_tl.x > draw_area_br.x or sprite_br.x < draw_area_tl.x or sprite_tl.y > draw_area_br.y or sprite_br.y < draw_area_tl.y)
