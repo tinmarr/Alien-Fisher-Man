@@ -2,7 +2,7 @@ import rubato as rb
 
 rb.init()
 
-import mainMenu, level1
+from data import mainMenu
 
 rb.utils.Display.set_window_name("yo mama's an Alien")
 
