@@ -16,10 +16,9 @@ play = rb.Text({
     "size": 20,
 })
 empty = rb.sprite.Empty()
-width = 2000
-height = 1000
-bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)), z_index=-1)
-bg.scale_abs(rb.Vector(width, int(height / 2)))
+width, height = 2000, 1000
+bg = rb.Image("img/ocean.png", pos=rb.Vector(0, height // 4), z_index=-1)
+bg.scale_abs(rb.Vector(width, height // 2))
 bg.image.set_colorkey((200, 200, 200))
 bg.image.set_alpha(100)
 menu.add(bg)
