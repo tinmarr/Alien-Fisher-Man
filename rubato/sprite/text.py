@@ -1,7 +1,8 @@
 from rubato.sprite import Sprite
-from rubato.utils import Vector, Color
+from rubato.utils import Vector, Color, Display
 from rubato.scenes import Camera
 import pygame
+from pygame.transform import scale
 
 class Text(Sprite):
     """
@@ -16,7 +17,8 @@ class Text(Sprite):
         "size": 16,
         "z_index": 0,
         "font_name": 'Arial',
-        "color": Color.red
+        "color": Color.black,
+        "static": False,
     }
 
     def __init__(self, options=default_options):
@@ -25,6 +27,7 @@ class Text(Sprite):
         self.size = options.get("size", Text.default_options["size"])
         self.font_name = options.get("font_name", Text.default_options["font_name"])
         self.color = options.get("color", Text.default_options["color"])
+        self.static = options.get("static", Text.default_options["static"])
         font = pygame.font.SysFont(self.font_name, self.size)
         self.image = font.render(self.text, True, self.color)
         
@@ -39,5 +42,12 @@ class Text(Sprite):
 
         :param camera: The current Camera viewing the scene.
         """
+        width, height = self.image.get_size()
+        new_size = (round(width * camera.zoom), round(height * camera.zoom))
+        Display.update(scale(self.image, new_size),
+        camera.transform(Sprite.center_to_tl(camera.pos + self.pos, Vector(width, height)) * camera.zoom))
 
-        super().draw(self.image, camera)
+    def is_in_frame(self, camera: Camera, game) -> bool:
+        if self.static:
+            return True
+        return super().is_in_frame(camera, game)
