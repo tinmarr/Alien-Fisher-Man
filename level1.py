@@ -42,13 +42,29 @@ level1.add(sky)
 fish = rb.Group()
 level1.add(fish)
 
+class Fish(rb.RigidBody):
+    def __init__(self, options):
+        super().__init__(options)
+        self.time_in_beam = 0
+
+    def custom_update(self):
+        if self.pos.y < 0:
+            self.params["gravity"] = 100
+            self.params["debug"] = True
+        else:
+            # TODO: still kinda jank
+            if self.acceleration > rb.Vector.ZERO:
+                self.acceleration -= rb.Vector.DOWN * rb.Time.delta_time("sec")
+                self.acceleration.clamp(rb.Vector.ZERO, rb.Vector.ONE * 100)
+            self.params["gravity"] = 0
+
 
 def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     fish_imgs = ["img/greenfish.png", "img/whitefish.png"]
     for _ in range(amt+1):
         scale = random.randint(1, 3)
         rotation = random.randint(0, 360)
-        fish_ = rb.RigidBody({
+        fish_ = Fish({
             "img": random.choice(fish_imgs),
             "hitbox": rb.Polygon.generate_rect(20 * scale, 11 * scale),
             "pos": rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y)),
@@ -62,6 +78,7 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
 
 
 
+
 def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     while amt > 1:
         pos = rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y))
@@ -72,6 +89,7 @@ def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
 
 player.init(width=width, height=height, level1=level1, barriers=barriers, fish=fish)
 level1.add(player.player)
+level1.add(player.beam_collider)
 
 
 gen_fish(rb.Vector(-width / 2, 100), rb.Vector(width / 2, height / 2), 50)

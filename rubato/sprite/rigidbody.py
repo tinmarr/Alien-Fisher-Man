@@ -118,6 +118,7 @@ class RigidBody(Sprite):
         if col_info is not None: callback(col_info)
         return col_info
 
+    # TODO: make this just for a collider
     def overlap(self, other: "RigidBody", callback: Callable = lambda c:None):
         """Checks for collision but does not handle it."""
         col_info = SAT.overlap(self.hitbox, other.hitbox)

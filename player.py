@@ -16,16 +16,35 @@ player = rb.RigidBody({
     "col_type": rb.COL_TYPE.ELASTIC,
 })
 
-def player_update():
-    player.physics()
+beam_collider = rb.RigidBody({
+    "hitbox": rb.Polygon.generate_rect(50, 300),
+    "pos": rb.Vector(50, 10),
+    "debug": True,
+    "img": "empty"
+})
+
+def fishy_accelerator(fishy):
+    fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
+    player.pos.distance_to(fishy.pos) * 10 * rb.Time.delta_time("sec")))
+    # fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
+    # fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
+
+def beam_update():
+    # How do you get a colliders size?
+    beam_collider.pos = player.pos + rb.Vector.DOWN * (300 / 2 + 15)
 
     if rb.Input.is_pressed("b"):
         for fishy in externals["fish"].sprites:
-            fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
-                                                        player.pos.distance_to(fishy.pos) * 10 * rb.Time.delta_time(
-                                                            "sec")))
-            # fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
-            # fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
+
+            if beam_collider.overlap(fishy) is not None:
+                fishy_accelerator(fishy)
+
+
+
+beam_collider.update = beam_update
+
+def player_update():
+    player.physics()
 
     if rb.Input.is_pressed("w"):
         player.acceleration.y = -400
