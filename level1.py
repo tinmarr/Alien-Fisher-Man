@@ -26,12 +26,12 @@ ceiling = gen_barrier(rb.Polygon.generate_rect(width, 100), rb.Vector(0, -50 - (
 barriers = rb.Group()
 barriers.sprites = [floor, wall_left, wall_right, ceiling]
 
-bg = rb.Image("img/ocean.png", pos=rb.Vector(0, int(height / 4)), z_index=-1)
-bg.scale_abs(rb.Vector(width, int(height / 2)))
+bg = rb.Image("img/ocean.png", pos=rb.Vector(0, height // 4), z_index=-1)
+bg.scale_abs(rb.Vector(width, height // 2))
 bg.image.set_colorkey((200, 200, 200))
 bg.image.set_alpha(100)
 
-sky = rb.Rectangle(rb.Vector(0, int(-height/4)), rb.Vector(width, int(height/2)), (92, 210, 242), -1)
+sky = rb.Rectangle(rb.Vector(0, -height//4), rb.Vector(width, height//2), (92, 210, 242), -1)
 
 fish = rb.Group()
 level1.add(fish)
@@ -48,14 +48,16 @@ class Fish(rb.RigidBody):
         self.time_in_beam = 0
 
     def custom_update(self):
+        if self.acceleration != rb.Vector(): print(self.acceleration)
+        if not rb.Input.is_pressed("b"):
+            self.acceleration = rb.Vector()
+
         if self.pos.y < 0:
             self.params["gravity"] = 100
             self.params["debug"] = True
-        else:
-            # TODO: still kinda jank
-            if self.acceleration > rb.Vector.ZERO:
-                self.acceleration -= rb.Vector.DOWN * rb.Time.delta_time("sec")
-                self.acceleration.clamp(rb.Vector.ZERO, rb.Vector.ONE * 100)
+        elif self.pos.y > 5:
+            if self.acceleration == rb.Vector():
+                self.velocity.y = 0
             self.params["gravity"] = 0
 
 

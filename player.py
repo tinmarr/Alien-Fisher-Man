@@ -24,10 +24,8 @@ beam_collider = rb.RigidBody({
 })
 
 def fishy_accelerator(fishy):
-    fishy.acceleration = (rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
-    player.pos.distance_to(fishy.pos) * 10 * rb.Time.delta_time("sec")))
-    # fishy.velocity.clamp(rb.Vector.ONE * -100, rb.Vector.ONE * 100)
-    # fishy.acceleration.clamp(rb.Vector.ONE * -2, rb.Vector.ONE * 2)
+    fishy.acceleration = rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
+        player.pos.distance_to(fishy.pos) * 50 * rb.Time.delta_time("sec"))
 
 def beam_update():
     # How do you get a colliders size?
