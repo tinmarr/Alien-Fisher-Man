@@ -5,6 +5,20 @@ level1 = rb.Scene()
 level1.camera.pos = rb.Vector(0, 150)
 rb.game.scenes.add(level1, "level1")
 
+score = 0
+
+def increment_score():
+    global score
+    score += 1
+
+score_text = rb.sprite.Text({
+    "text": str(score),
+    "pos": rb.Vector(50, 50),
+    "static": True
+})
+level1.add(score_text)
+
+
 def gen_barrier(hitbox, pos):
     temp = rb.RigidBody({
         "hitbox": hitbox,
@@ -87,7 +101,7 @@ def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
         amt -= amt_
         gen_fish(pos, pos2, amt_)
 
-player.init(width=width, height=height, level1=level1, barriers=barriers, fish=fish)
+player.init(width=width, height=height, level1=level1, barriers=barriers, fish=fish, increment=increment_score)
 level1.add(player.player)
 level1.add(player.beam_collider)
 

@@ -33,9 +33,12 @@ def beam_update():
 
     if rb.Input.is_pressed("b"):
         for fishy in externals["fish"].sprites:
-
             if beam_collider.overlap(fishy) is not None:
+                fishy.time_in_beam += rb.Time.delta_time("sec")
                 fishy_accelerator(fishy)
+                if fishy.time_in_beam > 4:
+                    externals["fish"].sprites.remove(fishy)
+                    externals["increment"]()
 
 
 
