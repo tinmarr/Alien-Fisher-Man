@@ -68,12 +68,11 @@ class Fish(rb.RigidBody):
 
     def custom_update(self):
         if self.acceleration != rb.Vector(): print(self.acceleration)
-        if not rb.Input.is_pressed("b"):
+        if not rb.Input.is_pressed("SPACE"):
             self.acceleration = rb.Vector()
 
         if self.pos.y < 0:
             self.params["gravity"] = 100
-            self.params["debug"] = True
         elif self.pos.y > 5:
             if self.acceleration == rb.Vector():
                 self.velocity.y = 0
