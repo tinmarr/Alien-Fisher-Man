@@ -2,6 +2,7 @@ import rubato as rb
 import random, player
 
 level1 = rb.Scene()
+level1.camera.pos = rb.Vector(0, 150)
 rb.game.scenes.add(level1, "level1")
 
 def gen_barrier(hitbox, pos):

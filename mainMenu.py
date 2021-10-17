@@ -26,13 +26,16 @@ menu.add(bg)
 
 def empty_update():
     if rb.Input.is_pressed("SPACE"):
-        pos = rb.Vector(0, -200)
+        pos = rb.Vector(0, 150)
         # TODO: camera not moving
-        while (pos - menu.camera.pos).magnitude > 1:
-            menu.camera.pos = menu.camera.pos.lerp(pos - rb.game.window_size / 2, 1.5 * rb.Time.delta_time("sec")).round(0)
-
-        rb.game.scenes.set("level1")
-
+        def call():
+            menu.camera.pos = menu.camera.pos.lerp(pos, 0.1 * rb.Time.delta_time("sec"))
+            if (pos - menu.camera.pos).magnitude > 10:
+                rb.Time.delayed_call(0.1 * rb.Time.delta_time("sec"), call)
+            else:
+                rb.game.scenes.set("level1")
+        rb.Time.delayed_call(0, call)
+        
 
 empty.update = empty_update
 interested = rb.sprite.Text({
