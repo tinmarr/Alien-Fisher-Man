@@ -24,7 +24,7 @@ class Polygon:
     def generate_rect(w: int = 16, h: int = 16) -> "Polygon":
         """
         Creates a rectangle from its dimensions
-        
+
         :param w: The width of the hitbox
         :param h: The height of the hitbox
         :return: The polygon
@@ -67,6 +67,12 @@ class Polygon:
 
     def __str__(self):
         return f"{list(map(lambda v: str(v), self.verts))}, {self.pos}, {self.scale}, {self.rotation}"
+
+    def bounding_box_dimensions(self):
+        real_verts = self.real_verts()
+        x_dir = SAT._project_verts_for_min_max(Vector(1, 0), real_verts)
+        y_dir = SAT._project_verts_for_min_max(Vector(1, 0), real_verts)
+        return Vector(x_dir["max"] - x_dir["min"], y_dir["max"] - y_dir["min"])
 
 
 # TODO make circles work
