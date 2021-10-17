@@ -78,9 +78,6 @@ def gen_fish(top_left: rb.Vector, bottom_right: rb.Vector, amt):
         fish_.hitbox.rotation = -rotation
         fish.add(fish_)
 
-
-
-
 def gen_fish_clusters(top_left: rb.Vector, bottom_right: rb.Vector, amt):
     while amt > 1:
         pos = rb.Vector(random.randint(top_left.x, bottom_right.x), random.randint(top_left.y, bottom_right.y))

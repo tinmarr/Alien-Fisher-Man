@@ -1,6 +1,7 @@
 import rubato as rb
 import webbrowser
 
+
 menu = rb.Scene()
 rb.game.scenes.add(menu, "menu")
 
@@ -15,10 +16,21 @@ play = rb.Text({
     "size": 20,
 })
 empty = rb.sprite.Empty()
+width, height = 2000, 1000
+bg = rb.Image("img/ocean.png", pos=rb.Vector(0, height // 4), z_index=-1)
+bg.scale_abs(rb.Vector(width, height // 2))
+bg.image.set_colorkey((200, 200, 200))
+bg.image.set_alpha(100)
+menu.add(bg)
 
 
 def empty_update():
     if rb.Input.is_pressed("SPACE"):
+        pos = rb.Vector(0, -200)
+        # TODO: camera not moving
+        while (pos - menu.camera.pos).magnitude > 1:
+            menu.camera.pos = menu.camera.pos.lerp(pos - rb.game.window_size / 2, 1.5 * rb.Time.delta_time("sec")).round(0)
+
         rb.game.scenes.set("level1")
 
 
