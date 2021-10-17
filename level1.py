@@ -33,6 +33,8 @@ def gen_barrier(hitbox, pos):
     return temp
 
 
+
+
 width = 2000
 height = 1000
 
