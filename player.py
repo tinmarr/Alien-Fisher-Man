@@ -10,7 +10,7 @@ player = rb.RigidBody({
     "friction": rb.Vector(0.97, 1),
     "hitbox": rb.Polygon.generate_rect(28 * 2, 15 * 2),
     "pos": rb.Vector(50, 0),
-    "debug": True,
+    "debug": False,
     "img": "img/ufo.png",
     "scale": rb.Vector(2, 2),
     "col_type": rb.COL_TYPE.ELASTIC,
@@ -19,7 +19,7 @@ player = rb.RigidBody({
 beam_collider = rb.RigidBody({
     "hitbox": rb.Polygon.generate_rect(50, 300),
     "pos": rb.Vector(50, 10),
-    "debug": True,
+    "debug": False,
     "img": (0, 0, 255, 127), 
     "z_index": 2
 })
