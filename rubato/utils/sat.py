@@ -71,7 +71,7 @@ class Polygon:
     def bounding_box_dimensions(self):
         real_verts = self.real_verts()
         x_dir = SAT._project_verts_for_min_max(Vector(1, 0), real_verts)
-        y_dir = SAT._project_verts_for_min_max(Vector(1, 0), real_verts)
+        y_dir = SAT._project_verts_for_min_max(Vector(0, 1), real_verts)
         return Vector(x_dir["max"] - x_dir["min"], y_dir["max"] - y_dir["min"])
 
 
