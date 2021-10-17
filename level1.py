@@ -7,10 +7,6 @@ rb.game.scenes.add(level1, "level1")
 
 score = 0
 
-def increment_score():
-    global score
-    score += 1
-
 score_text = rb.sprite.Text({
     "text": str(score),
     "pos": rb.Vector(50, 50),
@@ -18,6 +14,11 @@ score_text = rb.sprite.Text({
 })
 level1.add(score_text)
 
+def increment_score():
+    global score
+    score += 1
+    score_text.text = str(score)
+    score_text.remake_image()
 
 def gen_barrier(hitbox, pos):
     temp = rb.RigidBody({

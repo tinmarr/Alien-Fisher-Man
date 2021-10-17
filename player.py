@@ -1,5 +1,5 @@
 import rubato as rb
-
+import pygame
 externals = {}
 
 def init(**kwargs):
@@ -27,19 +27,24 @@ def fishy_accelerator(fishy):
     fishy.acceleration = rb.Vector.from_radial(player.pos.direction_to(fishy.pos),
         player.pos.distance_to(fishy.pos) * 50 * rb.Time.delta_time("sec"))
 
+
 def beam_update():
     # How do you get a colliders size?
     beam_collider.pos = player.pos + rb.Vector.DOWN * (300 / 2 + 15)
 
-    if rb.Input.is_pressed("b"):
+    if rb.Input.is_pressed("SPACE"):
         for fishy in externals["fish"].sprites:
             if beam_collider.overlap(fishy) is not None:
                 fishy.time_in_beam += rb.Time.delta_time("sec")
+                darkness = pygame.Surface((fishy.image.image.get_width(), fishy.image.image.get_height()),
+                                          flags=pygame.SRCALPHA)
+                darkness.fill((1, 1, 1, 2))
+                fishy.image.image.blit(darkness, (0, 0))
+                # fishy.image.image = fishy.image.image.set_colorkey(fishy.image.image.get_at((0, 0)))
                 fishy_accelerator(fishy)
                 if fishy.time_in_beam > 4:
                     externals["fish"].sprites.remove(fishy)
                     externals["increment"]()
-
 
 
 beam_collider.update = beam_update
