@@ -20,7 +20,8 @@ beam_collider = rb.RigidBody({
     "hitbox": rb.Polygon.generate_rect(50, 300),
     "pos": rb.Vector(50, 10),
     "debug": True,
-    "img": "empty"
+    "img": (0, 0, 255, 127), 
+    "z_index": 2
 })
 
 def fishy_accelerator(fishy):

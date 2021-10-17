@@ -60,7 +60,7 @@ class Game:
         Time.set(self.clock)
 
         self.screen = pygame.display.set_mode((self.window_width, self.window_height), pygame.RESIZABLE)
-        self.display = pygame.Surface((self.window_width, self.window_height))
+        self.display = pygame.Surface((self.window_width, self.window_height), pygame.SRCALPHA)
 
         pygame.display.set_caption(self.name)
         if options.get("icon"):

@@ -3,6 +3,7 @@ import random, player
 
 level1 = rb.Scene()
 level1.camera.pos = rb.Vector(0, 150)
+level1.camera.z_index = 1000
 rb.game.scenes.add(level1, "level1")
 
 score = 0

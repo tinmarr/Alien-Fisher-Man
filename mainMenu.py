@@ -27,7 +27,6 @@ menu.add(bg)
 def empty_update():
     if rb.Input.is_pressed("SPACE"):
         pos = rb.Vector(0, 150)
-        # TODO: camera not moving
         def call():
             menu.camera.pos = menu.camera.pos.lerp(pos, 0.1 * rb.Time.delta_time("sec"))
             if (pos - menu.camera.pos).magnitude > 10:
