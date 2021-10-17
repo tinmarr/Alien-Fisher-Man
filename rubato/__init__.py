@@ -25,6 +25,7 @@ def begin():
         raise RuntimeError("You have not initialized rubato. Make sure to run rubato.init() right after importing the library")
 
 # TODO Sound manager
+# TODO make it so that the 0,0 coordinate is the center of the inital screen and that positive y is up
 class Game:
     """
     Main Game object. Controls everything in the game.
